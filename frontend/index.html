@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WebSocket Chat SPA</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #f4f6fb;
+            margin: 0;
+            padding: 0;
+        }
+        #app {
+            max-width: 420px;
+            margin: 48px auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            padding: 32px 28px 24px 28px;
+        }
+        h2, h3 {
+            margin-top: 0;
+            color: #2d3748;
+        }
+        .login {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .login input {
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            outline: none;
+            transition: border 0.2s;
+        }
+        .login input:focus {
+            border: 1.5px solid #3182ce;
+        }
+        .login button {
+            padding: 10px;
+            background: #3182ce;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .login button:hover {
+            background: #2563eb;
+        }
+        .chat-room-list {
+            margin-bottom: 18px;
+        }
+        .chat-room-list button {
+            margin: 4px 6px 4px 0;
+            padding: 7px 18px;
+            border: none;
+            border-radius: 6px;
+            background: #e2e8f0;
+            color: #2d3748;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .chat-room-list button:disabled {
+            background: #3182ce;
+            color: #fff;
+            cursor: default;
+        }
+        .chat-room-list button:not(:disabled):hover {
+            background: #cbd5e1;
+        }
+        .messages {
+            height: 220px;
+            overflow-y: auto;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            margin-bottom: 14px;
+            padding: 10px;
+            background: #f8fafc;
+        }
+        .message {
+            margin-bottom: 10px;
+            padding: 6px 10px;
+            border-radius: 6px;
+            background: #e0e7ef;
+            color: #2d3748;
+            word-break: break-word;
+        }
+        .message b {
+            color: #2563eb;
+        }
+        #msgInput {
+            width: 70%;
+            padding: 9px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 1rem;
+            outline: none;
+            margin-right: 8px;
+            transition: border 0.2s;
+        }
+        #msgInput:focus {
+            border: 1.5px solid #3182ce;
+        }
+        #sendBtn {
+            padding: 9px 18px;
+            background: #3182ce;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        #sendBtn:hover {
+            background: #2563eb;
+        }
+        @media (max-width: 500px) {
+            #app {
+                padding: 16px 4vw;
+            }
+            .messages {
+                height: 160px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="app"></div>
+    <script type="module" src="src/app.js"></script>
+</body>
+</html>
