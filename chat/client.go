@@ -4,8 +4,6 @@ import (
 	"log"
 	"time"
 
-	"github.com/gorilla/websocket"
-
 	"github.com/websocket-chat-service/websocket/wsinterface"
 )
 
@@ -23,14 +21,14 @@ const (
 	maxMessageSize = 512
 )
 
-// Client is a middleman between the websocket connection and the hub.
+// Client is a middleman between the websocket connection and the chat manager.
 type ChatClient struct {
 	chatManager *ChatManager
 
 	// The websocket connection.
 	conn wsinterface.WebsocketInterface
 
-	// Buffered channel of outbound messages.
+	// Unbuffered channel of outbound messages.
 	send chan []byte
 }
 
@@ -84,7 +82,7 @@ func (c *ChatClient) WriteMessagesToWebSocket() {
 			c.conn.SetWriteDeadline(time.Now().Add(writeWait))
 			if !ok {
 				// The chat manager closed the channel.
-				c.conn.WriteMessage(websocket.CloseMessage, []byte{})
+				c.conn.WriteMessage(wsinterface.CloseMessageType, []byte{})
 				return
 			}
 
@@ -95,7 +93,7 @@ func (c *ChatClient) WriteMessagesToWebSocket() {
 			}
 		case <-ticker.C:
 			c.conn.SetWriteDeadline(time.Now().Add(writeWait))
-			if err := c.conn.WriteMessage(websocket.PingMessage, []byte{}); err != nil {
+			if err := c.conn.WriteMessage(wsinterface.PingMessageType, []byte{}); err != nil {
 				return
 			}
 		}
