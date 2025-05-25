@@ -1,5 +1,7 @@
 package chat
 
+import "github.com/websocket-chat-service/websocket/events"
+
 // ChatManager maintains the set of active clients and broadcasts messages to the
 // clients.
 type ChatManager struct {
@@ -7,7 +9,7 @@ type ChatManager struct {
 	clients map[*ChatClient]bool
 
 	// Inbound messages from the clients.
-	broadcast chan []byte
+	broadcast chan events.Event
 
 	// Register requests from the clients.
 	register chan *ChatClient
@@ -18,7 +20,7 @@ type ChatManager struct {
 
 func NewChatManager() *ChatManager {
 	return &ChatManager{
-		broadcast:  make(chan []byte),
+		broadcast:  make(chan events.Event),
 		register:   make(chan *ChatClient),
 		unregister: make(chan *ChatClient),
 		clients:    make(map[*ChatClient]bool),
@@ -46,4 +48,8 @@ func (cm *ChatManager) Run() {
 			}
 		}
 	}
+}
+
+func (cm *ChatManager) GetClients() map[*ChatClient]bool {
+	return cm.clients
 }

@@ -2,7 +2,7 @@ let onMessageCallback = null;
 
 export function connectWebSocket(onMessage) {
     // Replace with your actual WSS server URL
-    window.ws = new WebSocket("ws://" + document.location.host + "/ws");
+    window.ws = new WebSocket("wss://" + document.location.host + "/ws");
     onMessageCallback = onMessage;
     window.ws.onopen = () => console.log('WebSocket connected');
     window.ws.onmessage = (event) => {
