@@ -104,7 +104,7 @@ func (c *ChatClient) ReadMessagesFromWebSocket() {
 			break
 		}
 
-		// Marshal incoming data into a Event struct
+		// Marshal incoming data into a Event.
 		var event events.Event
 		if err := json.Unmarshal(message, &event); err != nil {
 			log.Printf("error marshalling message: %s", err.Error())
@@ -112,7 +112,6 @@ func (c *ChatClient) ReadMessagesFromWebSocket() {
 		}
 
 		if event.Type == events.EventChangeRoom {
-			// Marshal Payload into wanted format
 			var changeRoomEvent events.ChangeRoomEvent
 			if err := json.Unmarshal(event.Payload, &changeRoomEvent); err != nil {
 				log.Printf("bad payload in request for change room event: %s", err.Error())
@@ -153,13 +152,13 @@ func (c *ChatClient) WriteMessagesToWebSocket() {
 			message, err := json.Marshal(event)
 			if err != nil {
 				log.Printf("failed to marshal event message: %s", err.Error())
-				return
+				continue
 			}
 
 			err = c.conn.WriteMessage(wsinterface.TextMessageType, message)
 			if err != nil {
 				log.Printf("Failed to write message: %s", err.Error())
-				return
+				continue
 			}
 		case <-ticker.C:
 			c.conn.SetWriteDeadline(time.Now().Add(writeWait))
